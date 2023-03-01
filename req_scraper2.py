@@ -1,17 +1,29 @@
 import requests
 
-session = requests.Session()
-link = 'https://www.ntnu.no/nettbutikk/gjenbruk/produktkategori/produkter/'
+class Website:
+    def __init__(self, url, password, username) -> None:
+        self.url = url
+        self.password = password
+        self.username = username
 
-r = session.get(link)
+link = 'https://www.ntnu.no/nettbutikk/gjenbruk/produktkategori/produkter/'
+password = "test"
+username = "test"
+
+website = Website(link, password, username)
+
+session = requests.Session()
+
+
+r = session.get(website.link)
 login_url = r.url
 
 #print(login_url)
 
 # Create the payload
 payload = {
-        'feidename':'', 
-        'password':''
+        'feidename':website.password, 
+        'password': website.username
          }
 
 # Post the payload to the site to log in
@@ -27,7 +39,7 @@ x = session.post('https://www.ntnu.no/nettbutikk/', data=samlRes)
 print(s.text)
 
 '''
-
+fill in pass and user
 files = {
     'feidename': (None, ''),
     'password': (None, ''),

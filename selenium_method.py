@@ -12,8 +12,8 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
 
 # Log in
-username = "sshassan"
-password = "Purpleelephant22!8ntnu"
+username = ""
+password = ""
 
 driver.get("https://www.ntnu.no/nettbutikk/gjenbruk/produktkategori/produkter/")
 driver.find_element("name", "feidename").send_keys(username)
