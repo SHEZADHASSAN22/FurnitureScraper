@@ -6,14 +6,14 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 
-# TODELETE: Global variable
 desired_quantity = 0
 
-# TODELETE: Data class
 class User:
-    def __init__(self, username, password) -> None:
+    def __init__(self, username, password, usernameTag, passwordTag) -> None:
         self.username = username
         self.password = password
+        self.usernameTag = usernameTag
+        self.passwordTag = passwordTag
 
 class Scraper:
     def __init__(self, options) -> None:
@@ -21,7 +21,6 @@ class Scraper:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
 
-    # TO DELETE: Use filter instead  of loop
     def find_digit(self, string):
         output = ''
         for i in string:
@@ -29,8 +28,6 @@ class Scraper:
                 output = output + i
         return output
 
-    # TODELETE: Lazy class or element
-    # TODELETE: Feature envy
     def getTags(self, user):
         return [user.usernameTag, user.passwordTag]
 
@@ -41,7 +38,6 @@ class Scraper:
         self.driver.find_element("name", passwordTag).send_keys(password)
         self.driver.find_element("xpath", '//button[@type="submit"]').click()
 
-    # TODELETE: Long param list
     def getInfoFromSite(self, username, password, url, desiredquantity):
         htmlTags = self.getTags()
         self.login(username, url, password, htmlTags[0], htmlTags[1])
@@ -69,5 +65,5 @@ class Scraper:
 options = Options()
 options.add_argument("--headless=new")
 scraper = Scraper(options)
-user1 = User("testuser", "testpass")
+user1 = User("testuser", "testpass", "testTag", "testTag2")
 listOfItems = scraper.getInfoFromSite(user1.username, user1.password, "https://www.ntnu.no/nettbutikk/gjenbruk/produktkategori/produkter/", desired_quantity)
